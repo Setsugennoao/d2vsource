@@ -13,13 +13,13 @@ libd2vsource_la_SOURCES = src/core/compat.cpp \
 						  src/core/decode.cpp \
 						  src/core/decode.hpp \
 						  src/core/gop.hpp \
-						  src/vs4/applyrff4.cpp \
-						  src/vs4/applyrff4.hpp \
-						  src/vs4/d2vsource4.cpp \
-						  src/vs4/d2vsource4.hpp \
-						  src/vs4/directrender4.cpp \
-						  src/vs4/directrender4.hpp \
-						  src/vs4/vapoursynth4.cpp
+						  src/vs/applyrff.cpp \
+						  src/vs/applyrff.hpp \
+						  src/vs/d2vsource.cpp \
+						  src/vs/d2vsource.hpp \
+						  src/vs/directrender.cpp \
+						  src/vs/directrender.hpp \
+						  src/vs/vapoursynth.cpp
 
 libd2vsource_la_LDFLAGS = -no-undefined -avoid-version $(PLUGINLDFLAGS)
 

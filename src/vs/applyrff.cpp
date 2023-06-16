@@ -28,11 +28,9 @@
 #include <VapourSynth4.h>
 #include <VSHelper4.h>
 
-#include "applyrff4.hpp"
+#include "applyrff.hpp"
 #include "d2v.hpp"
 #include "gop.hpp"
-
-namespace vs4 {
 
 static const VSFrame *VS_CC rffGetFrame(int n, int activationReason, void *instanceData, void **frameData,
                                     VSFrameContext *frameCtx, VSCore *core, const VSAPI *vsapi)
@@ -205,6 +203,4 @@ void VS_CC rffCreate(const VSMap *in, VSMap *out, void *userData, VSCore *core, 
     VSFilterDependency deps[] = {data->node, rpGeneral};
     vsapi->createVideoFilter(out, "applyrff", &data->vi, rffGetFrame, rffFree, fmParallel, deps, 1, data.get(), core);
     data.release();
-}
-
 }

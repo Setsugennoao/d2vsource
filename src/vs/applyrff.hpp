@@ -20,20 +20,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <cstdint>
-#include <cstdlib>
+#ifndef APPLYRFF_H
+#define APPLYRFF_H
 
 #include <VapourSynth4.h>
 #include <VSHelper4.h>
+#include <memory>
 
-#include "applyrff4.hpp"
-#include "d2vsource4.hpp"
+#include "d2v.hpp"
 
-using namespace vs4;
+typedef enum rffFieldType {
+    Top,
+    Bottom,
+    Progressive
+} rffFieldType;
 
-VS_EXTERNAL_API(void) VapourSynthPluginInit2(VSPlugin *plugin, const VSPLUGINAPI *vspapi) {
-    vspapi->configPlugin("com.sources.d2vsource", "d2v", "D2V Source", VS_MAKE_VERSION(1, 1), VAPOURSYNTH_API_VERSION, 0, plugin);
+typedef struct rffField {
+    int frame; // Source frame for this field.
+    rffFieldType type;
+} rffField;
 
-    vspapi->registerFunction("Source", "input:data;threads:int:opt;nocrop:int:opt;rff:int:opt;", "clip:vnode;", d2vCreate, 0, plugin);
-    vspapi->registerFunction("ApplyRFF", "clip:vnode;d2v:data;", "clip:vnode;", rffCreate, 0, plugin);
-}
+typedef struct rffData {
+    std::unique_ptr<d2vcontext> d2v;
+    std::vector<rffField> fields; // Output fields, in the order they are to be displayed.
+
+    VSVideoInfo vi;
+    VSNode *node;
+} rffData;
+
+void VS_CC rffCreate(const VSMap *in, VSMap *out, void *userData, VSCore *core, const VSAPI *vsapi);
+
+#endif

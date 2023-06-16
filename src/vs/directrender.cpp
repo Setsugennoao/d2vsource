@@ -28,13 +28,12 @@ extern "C" {
 #include <libavcodec/avcodec.h>
 }
 
-#include "d2vsource4.hpp"
-#include "directrender4.hpp"
+#include "d2vsource.hpp"
+#include "directrender.hpp"
 
 #include <VapourSynth4.h>
 #include <VSHelper4.h>
 
-namespace vs4 {
 
 int VSGetBuffer(AVCodecContext *avctx, AVFrame *pic, int flag)
 {
@@ -107,6 +106,4 @@ void VSReleaseBuffer(void *opaque, uint8_t *data)
 
     userdata->d2v->api->freeFrame(userdata->vs_frame);
     delete userdata;
-}
-
 }

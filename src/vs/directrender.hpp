@@ -20,39 +20,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef D2VSOURCE_H
-#define D2VSOURCE_H
+#ifndef DIRECTRENDER_H
+#define DIRECTRENDER_H
 
-#include <VapourSynth4.h>
-#include <VSHelper4.h>
-#include <memory>
+extern "C" {
+#include <libavcodec/avcodec.h>
+}
 
 #include "d2v.hpp"
-#include "decode.hpp"
 
-namespace vs4 {
+typedef struct VSData {
+    VSFrame *vs_frame;
+    d2vData *d2v;
+} VSData;
 
-typedef struct d2vData {
-    std::unique_ptr<d2vcontext> d2v;
-    std::unique_ptr<decodecontext> dec;
-    AVFrame *frame;
-    VSVideoInfo vi;
-    VSCore *core;
-    const VSAPI *api;
-
-    int aligned_height;
-    int aligned_width;
-
-    int last_decoded;
-    int linear_threshold;
-
-    bool format_set;
-
-    ~d2vData();
-} d2vData;
-
-void VS_CC d2vCreate(const VSMap *in, VSMap *out, void *userData, VSCore *core, const VSAPI *vsapi);
-
-}
+int VSGetBuffer(AVCodecContext *avctx, AVFrame *pic, int flag);
+void VSReleaseBuffer(void *opaque, uint8_t *data);
 
 #endif

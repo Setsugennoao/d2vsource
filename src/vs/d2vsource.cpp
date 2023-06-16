@@ -27,11 +27,9 @@
 #include <VSHelper4.h>
 
 #include "d2v.hpp"
-#include "d2vsource4.hpp"
+#include "d2vsource.hpp"
 #include "decode.hpp"
-#include "directrender4.hpp"
-
-namespace vs4 {
+#include "directrender.hpp"
 
 d2vData::~d2vData() {
     if (frame) {
@@ -271,6 +269,4 @@ void VS_CC d2vCreate(const VSMap *in, VSMap *out, void *userData, VSCore *core, 
     } else {
         vsapi->mapConsumeNode(out, "clip", snode, maReplace);
     }
-}
-
 }
